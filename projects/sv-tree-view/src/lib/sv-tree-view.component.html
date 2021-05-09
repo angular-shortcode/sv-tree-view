@@ -1,0 +1,42 @@
+<div class="sv-tree" cdkDropListGroup>
+  <ng-container [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{list: treeList}"></ng-container>
+</div>
+
+<ng-template #tree let-list="list">
+  <div class="sv-tree-list"
+       cdkDropList
+       [cdkDropListData]="list"
+       [cdkDropListDisabled]="!draggable"
+       (cdkDropListDropped)="drop($event)">
+    <div class="sv-tree-content"
+         cdkDrag
+         *ngFor="let item of list">
+      <div class="sv-tree-content-row"
+           [style.cursor]="checkbox ? null : 'pointer'"
+           (click)="clickRow(item)">
+        <div class="sv-tree-content-row-expand" (click)="expandRow(item)">
+          <mat-icon *ngIf="item.children?.length">{{item.expanded ? 'expand_less' : 'expand_more'}}</mat-icon>
+        </div>
+        <div class="sv-tree-content-row-checkbox" *ngIf="checkbox">
+          <mat-checkbox
+            [indeterminate]="item.indeterminate"
+            [checked]="item.selected"
+            [disabled]="item.disabled"
+            (indeterminateChange)="checkIndeterminate(item)"
+            (change)="rowSelected(item)">
+          </mat-checkbox>
+        </div>
+        <ng-container *ngIf="!customTemplate">
+          <label>{{item[fieldName]}}</label>
+        </ng-container>
+        <ng-container *ngIf="customTemplate">
+          <ng-template [ngTemplateOutlet]="customTemplate" [ngTemplateOutletContext]="{data: item}"></ng-template>
+        </ng-container>
+      </div>
+      <div *ngIf="item?.children?.length && item.expanded" [style.marginLeft]="'24px'">
+        <ng-container [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{list: item.children}"></ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+

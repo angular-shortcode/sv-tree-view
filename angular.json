@@ -1,7 +1,51 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "9e644ec7-3f15-49e7-856b-07b240ac399f"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "sv-tree-view": {
+      "projectType": "library",
+      "root": "projects/sv-tree-view",
+      "sourceRoot": "projects/sv-tree-view/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/sv-tree-view/tsconfig.lib.json",
+            "project": "projects/sv-tree-view/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/sv-tree-view/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/sv-tree-view/src/test.ts",
+            "tsConfig": "projects/sv-tree-view/tsconfig.spec.json",
+            "karmaConfig": "projects/sv-tree-view/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/sv-tree-view/tsconfig.lib.json",
+              "projects/sv-tree-view/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "sv-tree-view"
 }

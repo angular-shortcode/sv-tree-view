@@ -16,6 +16,12 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
+    "paths": {
+      "sv-tree-view": [
+        "dist/sv-tree-view/sv-tree-view",
+        "dist/sv-tree-view"
+      ]
+    },
     "lib": [
       "es2018",
       "dom"
